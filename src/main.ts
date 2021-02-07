@@ -2,8 +2,11 @@ import * as core from '@actions/core'
 import {Octokit} from '@octokit/action'
 import {context} from '@actions/github'
 
-
-export function getJobName(job: string, matrixOs: string, matrixNode: string): string {
+export function getJobName(
+  job: string,
+  matrixOs: string,
+  matrixNode: string
+): string {
   let jobName = job
   if (matrixOs && matrixNode) {
     jobName = `${job} (${matrixOs}, ${matrixNode})`
@@ -49,7 +52,10 @@ async function run(): Promise<void> {
   try {
     const matrixOs: string = core.getInput('matrix_os')
     const matrixNode: string = core.getInput('matrix_node')
+    core.info(`Got ${matrixOs} ${matrixNode}`)
     const buildUrl = await getActionUrl(matrixOs, matrixNode)
+
+    core.info(`Action log url ${buildUrl}`)
     core.setOutput('url', buildUrl)
   } catch (error) {
     core.setFailed(error.message)

@@ -85,7 +85,9 @@ function run() {
         try {
             const matrixOs = core.getInput('matrix_os');
             const matrixNode = core.getInput('matrix_node');
+            core.info(`Got ${matrixOs} ${matrixNode}`);
             const buildUrl = yield getActionUrl(matrixOs, matrixNode);
+            core.info(`Action log url ${buildUrl}`);
             core.setOutput('url', buildUrl);
         }
         catch (error) {
