@@ -23,11 +23,11 @@ jobs:
         node-version: [14]
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
-        name: gettheurl
+      - id: get-the-url
+        uses: ./        
         with:
           matrix_os: ${{ matrix.os }}
           matrix_node: ${{ matrix.node-version }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - run: echo ${{ steps.gettheurl.outputs.url }}
+      - run: echo "${{ steps.get-the-url.outputs.url }}"
