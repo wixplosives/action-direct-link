@@ -46,6 +46,8 @@ test: # make sure the action works on a clean machine without building
         with:
           matrix_os: ${{ matrix.os }}
           matrix_node: ${{ matrix.node-version }}
+        env:
+            GITHUB_TOKEN: ${{ secrets.CIJOE_GITHUB_TOKEN }}
       - run: echo ${{ steps.gettheurl.outputs.url }}
 ```
 
