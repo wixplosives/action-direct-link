@@ -1,11 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Action Direct Link'
+description: 'This action calculates link to direct'
+author: 'core3'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  matrix_os:
+    required: false
+    description: 'if job is part or matrix strategy, current os (matris.os))'
+  matrix_node:
+    required: false
+    description: 'if job is part or matrix strategy, current node-version (matris.node-version))'
 runs:
   using: 'node12'
   main: 'dist/index.js'
