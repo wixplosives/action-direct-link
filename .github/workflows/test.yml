@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     name: some fancy name
     steps:
+      - uses: actions/checkout@v2
       - id: get-the-url
         uses: ./        
         with:
