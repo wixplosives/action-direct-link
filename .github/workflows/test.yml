@@ -31,14 +31,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - run: echo "${{ steps.get-the-url.outputs.url }}"      
-    test-custom-name:
-      name: some fancy name
-      - id: get-the-url
-        uses: ./        
-        with:
-          custom_job_name: "some fancy name"
-          matrix_os: ${{ matrix.os }}
-          matrix_node: ${{ matrix.node-version }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - run: echo "${{ steps.get-the-url.outputs.url }}"
+  test-custom-name:
+    name: some fancy name
+    - id: get-the-url
+      uses: ./        
+      with:
+        custom_job_name: "some fancy name"
+        matrix_os: ${{ matrix.os }}
+        matrix_node: ${{ matrix.node-version }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - run: echo "${{ steps.get-the-url.outputs.url }}"
