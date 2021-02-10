@@ -2,6 +2,9 @@ name: 'Action Direct Link'
 description: 'This action calculates link to direct'
 author: 'core3'
 inputs:
+  custom_job_name:
+    required: false
+    description: 'if job has custom name defined in name: field pass it here, otherwise it will be not possible to find job in github api'
   matrix_os:
     required: false
     description: 'if job is part or matrix strategy, current os (matris.os))'

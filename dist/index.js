@@ -54,17 +54,18 @@ function getJobName(job, matrixOs, matrixNode) {
     return jobName;
 }
 exports.getJobName = getJobName;
-function getActionUrl(matrixOs, matrixNode) {
+function getActionUrl(matrixOs, matrixNode, customJobName) {
     return __awaiter(this, void 0, void 0, function* () {
         const { runId, job } = github_1.context;
         const { owner, repo } = github_1.context.repo;
+        const jobNameToUse = customJobName ? customJobName : job;
         const commandUrl = 'GET /repos/{onerPar}/{repoName}/actions/runs/{runIdPar}/jobs';
         const commandParams = {
             onerPar: owner,
             repoName: repo,
             runIdPar: runId
         };
-        const jobName = getJobName(job, matrixOs, matrixNode);
+        const jobName = getJobName(jobNameToUse, matrixOs, matrixNode);
         core.info(`Get action logs ${owner}/${repo} ${runId} ${jobName}`);
         const github_token = process.env['GITHUB_TOKEN'];
         const octokit = new action_1.Octokit({ auth: github_token });
@@ -85,8 +86,9 @@ function run() {
         try {
             const matrixOs = core.getInput('matrix_os');
             const matrixNode = core.getInput('matrix_node');
+            const customJobName = core.getInput('custom_job_name');
             core.info(`Got ${matrixOs} ${matrixNode}`);
-            const buildUrl = yield getActionUrl(matrixOs, matrixNode);
+            const buildUrl = yield getActionUrl(matrixOs, matrixNode, customJobName);
             core.info(`Action log url ${buildUrl}`);
             core.setOutput('url', buildUrl);
         }

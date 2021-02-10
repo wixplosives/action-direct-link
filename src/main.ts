@@ -20,11 +20,13 @@ export function getJobName(
 
 export async function getActionUrl(
   matrixOs: string,
-  matrixNode: string
+  matrixNode: string,
+  customJobName: string
 ): Promise<string> {
   const {runId, job} = context
   const {owner, repo} = context.repo
 
+  const jobNameToUse = customJobName ? customJobName : job
   const commandUrl =
     'GET /repos/{onerPar}/{repoName}/actions/runs/{runIdPar}/jobs'
   const commandParams = {
@@ -32,7 +34,7 @@ export async function getActionUrl(
     repoName: repo,
     runIdPar: runId
   }
-  const jobName = getJobName(job, matrixOs, matrixNode)
+  const jobName = getJobName(jobNameToUse, matrixOs, matrixNode)
   core.info(`Get action logs ${owner}/${repo} ${runId} ${jobName}`)
   const github_token = process.env['GITHUB_TOKEN']
   const octokit = new Octokit({auth: github_token})
@@ -52,8 +54,9 @@ async function run(): Promise<void> {
   try {
     const matrixOs: string = core.getInput('matrix_os')
     const matrixNode: string = core.getInput('matrix_node')
+    const customJobName: string = core.getInput('custom_job_name')
     core.info(`Got ${matrixOs} ${matrixNode}`)
-    const buildUrl = await getActionUrl(matrixOs, matrixNode)
+    const buildUrl = await getActionUrl(matrixOs, matrixNode, customJobName)
 
     core.info(`Action log url ${buildUrl}`)
     core.setOutput('url', buildUrl)
