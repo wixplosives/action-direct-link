@@ -23,26 +23,17 @@ export async function getActionUrl(
   matrixNode: string,
   customJobName: string
 ): Promise<string> {
-  const {runId, job} = context
+  const runId = context.runId
   const {owner, repo} = context.repo
-
-  const jobNameToUse = customJobName ? customJobName : job
-  const commandUrl =
-    'GET /repos/{onerPar}/{repoName}/actions/runs/{runIdPar}/jobs'
-  const commandParams = {
-    onerPar: owner,
-    repoName: repo,
-    runIdPar: runId
-  }
+  const jobNameToUse = customJobName ?? context.job
   const jobName = getJobName(jobNameToUse, matrixOs, matrixNode)
-  core.info(`Get action logs ${owner}/${repo} ${runId} ${jobName}`)
-  const github_token = process.env['GITHUB_TOKEN']
-  const octokit = new Octokit({auth: github_token})
-  const retval = await octokit.request(commandUrl, commandParams)
-
-  for (const buildNum in retval.data.jobs) {
-    if (retval.data.jobs[buildNum].name === jobName) {
-      const runJobId = retval.data.jobs[buildNum].id
+  const octokit = new Octokit({auth: process.env['GITHUB_TOKEN']})
+  const jobs = await octokit.request(
+    `GET /repos/${owner}/${repo}/actions/runs/${runId}/jobs`
+  )
+  for (const buildNum in jobs.data.jobs) {
+    if (jobs.data.jobs[buildNum].name === jobName) {
+      const runJobId = jobs.data.jobs[buildNum].id
       const link = `https://github.com/${owner}/${repo}/runs/${runJobId}?check_suite_focus=true`
       return link
     }
@@ -57,7 +48,6 @@ async function run(): Promise<void> {
     const customJobName: string = core.getInput('custom_job_name')
     core.info(`Got ${matrixOs} ${matrixNode}`)
     const buildUrl = await getActionUrl(matrixOs, matrixNode, customJobName)
-
     core.info(`Action log url ${buildUrl}`)
     core.setOutput('url', buildUrl)
   } catch (error) {
