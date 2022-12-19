@@ -12,5 +12,5 @@ inputs:
     required: false
     description: 'if job is part or matrix strategy, current node-version (matris.node-version))'
 runs:
-  using: 'node12'
+  using: 'node18'
   main: 'dist/index.js'
