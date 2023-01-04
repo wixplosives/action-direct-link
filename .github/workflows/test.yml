@@ -14,7 +14,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [16, 18]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           npm ci
       - run: |
@@ -26,7 +26,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [16, 18]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: get-the-url
         uses: ./
         with:
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     name: some fancy name
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: get-the-url
         uses: ./
         with:
