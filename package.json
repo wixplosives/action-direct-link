@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "@vercel/ncc": "^0.36.1",
     "ansi-regex": "^6.0.1",
     "eslint": "^8.33.0",
@@ -50,7 +50,7 @@
     "path-parse": "^1.0.7",
     "prettier": "^2.8.3",
     "ts-jest": "^29.0.5",
-    "typescript": "^4.9.4",
+    "typescript": "^4.9.5",
     "ws": "^8.12.0",
     "y18n": "^5.0.8"
   }
