@@ -50,7 +50,7 @@
     "path-parse": "^1.0.7",
     "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "ws": "^8.13.0",
     "y18n": "^5.0.8"
   }
